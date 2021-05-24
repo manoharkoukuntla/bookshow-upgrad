@@ -4,6 +4,8 @@ import Modal from 'react-modal';
 import { Card, Tabs, Tab, CardContent } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
+
 import './LoginModal.css';
 
 const styles = (theme) => ({
@@ -51,7 +53,11 @@ function LoginModal(props) {
               <LoginForm onClose={onClose} />
             </div>
           )}
-          {selectedTab === 1 && <div className="p-6">Register</div>}
+          {selectedTab === 1 && (
+            <div className="p-6">
+              <RegisterForm onClose={onClose} />
+            </div>
+          )}
         </CardContent>
       </Card>
     </Modal>

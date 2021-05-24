@@ -28,19 +28,27 @@ function LoginForm(props) {
   const [reqPassword, setReqPassword] = useState('dispNone');
 
   const onSubmit = async () => {
-    if (!username) setReqUsername('dispBlock');
-    else setReqUsername('dispNone');
-    if (!password) setReqPassword('dispBlock');
-    else setReqUsername('dispNone');
+    if (!username) {
+      setReqUsername('dispBlock');
+    } else {
+      setReqUsername('dispNone');
+    }
+
+    if (!password) {
+      setReqPassword('dispBlock');
+    } else {
+      setReqPassword('dispNone');
+    }
 
     if (!username || !password) {
-      console.log('not submitted');
       return;
     }
 
-    const { user, accessToken } = await login({ username, password });
-    Cookies.set('accessToken', accessToken);
-    props.onClose();
+    try {
+      const { accessToken } = await login({ username, password });
+      Cookies.set('accessToken', accessToken);
+      props.onClose();
+    } catch (error) {}
   };
 
   return (
