@@ -14,6 +14,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import { Link } from "react-router-dom";
 
 const BookShow = (props) => {
+
   const [location, setLocation] = useState("");
   const [theatre, setTheatre] = useState("");
   const [language, setLanguage] = useState("");
@@ -35,7 +36,6 @@ const BookShow = (props) => {
 
   useEffect(() => {
     let dataShows = null;
-
     fetch(props.baseUrl + "movies/" + props.match.params.id + "/shows", {
       method: "GET",
       headers: {

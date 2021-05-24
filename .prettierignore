@@ -1,0 +1,26 @@
+# Ignore artifacts:
+build
+coverage
+
+# Ember apps
+/ember-app
+
+# webpacker
+/public/packs
+/public/packs-test
+yarn-debug.log*
+.yarn-integrity
+
+# Test fixtures
+spec/fixtures/desktop_import/parser_error.json
+*.js.snap
+
+/node_modules
+/tmp
+/log
+/storage
+/coverage
+/public/assets
+/vendor
+*.yml
+.watchmanconfig
