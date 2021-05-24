@@ -1,13 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 
-import {Card, Tabs, Tab, CardContent} from '@material-ui/core';
+import { Card, Tabs, Tab, CardContent } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import LoginForm from './LoginForm'
+import LoginForm from './LoginForm';
 import './LoginModal.css';
 
-
-const styles = theme => ({
+const styles = (theme) => ({
   card: {
     maxWidth: '400px',
     paddingLeft: '16px',
@@ -15,15 +14,15 @@ const styles = theme => ({
 });
 
 const modalStyle = {
-  content : {
+  content: {
     width: '400px',
     height: 'fit-content',
     margin: 'auto',
-    padding: '0'
-  }
+    padding: '0',
+  },
 };
 
-function LoginModal(props){
+function LoginModal(props) {
   const { classes, isOpen, onClose } = props;
   const [selectedTab, setTab] = useState(0);
 
@@ -31,8 +30,7 @@ function LoginModal(props){
     setTab(value);
   };
 
-  const afterOpenModal = () =>  {
-  }
+  const afterOpenModal = () => {};
 
   return (
     <Modal
@@ -48,7 +46,11 @@ function LoginModal(props){
             <Tab label="Login" />
             <Tab label="Register" />
           </Tabs>
-          {selectedTab === 0 && <div className="p-6"><LoginForm onClose={onClose}/></div>}
+          {selectedTab === 0 && (
+            <div className="p-6">
+              <LoginForm onClose={onClose} />
+            </div>
+          )}
           {selectedTab === 1 && <div className="p-6">Register</div>}
         </CardContent>
       </Card>

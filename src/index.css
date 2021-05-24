@@ -5,10 +5,10 @@ body {
 }
 
 .flex {
-  display: flex
+  display: flex;
 }
 
-.justify-self-end	{
+.justify-self-end {
   justify-self: end;
 }
 

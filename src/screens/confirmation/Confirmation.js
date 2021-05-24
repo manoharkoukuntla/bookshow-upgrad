@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import Header from "../../common/header/Header";
-import "./Confirmation.css";
-import Typography from "@material-ui/core/Typography";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import { withStyles } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import green from "@material-ui/core/colors/green";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import Header from '../../common/header/Header';
+import './Confirmation.css';
+import Typography from '@material-ui/core/Typography';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import green from '@material-ui/core/colors/green';
+import { Link } from 'react-router-dom';
 
 const styles = (theme) => ({
   close: {
@@ -29,8 +29,8 @@ const styles = (theme) => ({
 
 const Confirmation = (props) => {
   const [open, setOpen] = useState(false);
-  const [bookingId, setBookingId] = useState("");
-  const [couponCode, setCouponCode] = useState("");
+  const [bookingId, setBookingId] = useState('');
+  const [couponCode, setCouponCode] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
   const [originalTotalPrice, setOriginalTotalPrice] = useState(0);
 
@@ -49,12 +49,12 @@ const Confirmation = (props) => {
       tickets: [props.location.bookingSummary.tickets.toString()],
     });
 
-    fetch(props.baseUrl + "bookings", {
-      method: "POST",
+    fetch(props.baseUrl + 'bookings', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "no-cache",
-        Authorization: "Bearer " + sessionStorage.getItem("access-token"),
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        Authorization: 'Bearer ' + sessionStorage.getItem('access-token'),
       },
       body: data,
     })
@@ -67,7 +67,7 @@ const Confirmation = (props) => {
   };
 
   const snackBarCloseHandler = () => {
-    props.history.push("/");
+    props.history.push('/');
   };
 
   const couponCodeChangeHandler = (e) => {
@@ -75,21 +75,19 @@ const Confirmation = (props) => {
   };
 
   const couponApplyHandler = () => {
-    fetch(props.baseUrl + "movies/" + props.match.params.id, {
-      method: "GET",
+    fetch(props.baseUrl + 'movies/' + props.match.params.id, {
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "no-cache",
-        Authorization: "Bearer " + sessionStorage.getItem("access-token"),
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        Authorization: 'Bearer ' + sessionStorage.getItem('access-token'),
       },
     })
       .then((response) => response.json())
       .then((data) => {
         let discountValue = data.value;
         if (discountValue !== undefined && discountValue > 0) {
-          setTotalPrice(
-            originalTotalPrice - (originalTotalPrice * discountValue) / 100
-          );
+          setTotalPrice(originalTotalPrice - (originalTotalPrice * discountValue) / 100);
         } else {
           setTotalPrice(originalTotalPrice);
         }
@@ -104,7 +102,7 @@ const Confirmation = (props) => {
 
       <div className="confirmation marginTop16">
         <div>
-          <Link to={"/bookshow/" + props.match.params.id}>
+          <Link to={'/bookshow/' + props.match.params.id}>
             <Typography className="back">&#60; Back to Book Show</Typography>
           </Link>
           <br />
@@ -121,9 +119,7 @@ const Confirmation = (props) => {
                   <Typography>Location:</Typography>
                 </div>
                 <div>
-                  <Typography>
-                    {props.location.bookingSummary.location}
-                  </Typography>
+                  <Typography>{props.location.bookingSummary.location}</Typography>
                 </div>
               </div>
               <br />
@@ -133,9 +129,7 @@ const Confirmation = (props) => {
                   <Typography>Theatre:</Typography>
                 </div>
                 <div>
-                  <Typography>
-                    {props.location.bookingSummary.theatre}
-                  </Typography>
+                  <Typography>{props.location.bookingSummary.theatre}</Typography>
                 </div>
               </div>
               <br />
@@ -145,9 +139,7 @@ const Confirmation = (props) => {
                   <Typography>Language:</Typography>
                 </div>
                 <div>
-                  <Typography>
-                    {props.location.bookingSummary.language}
-                  </Typography>
+                  <Typography>{props.location.bookingSummary.language}</Typography>
                 </div>
               </div>
               <br />
@@ -157,9 +149,7 @@ const Confirmation = (props) => {
                   <Typography>Show Date:</Typography>
                 </div>
                 <div>
-                  <Typography>
-                    {props.location.bookingSummary.showDate}
-                  </Typography>
+                  <Typography>{props.location.bookingSummary.showDate}</Typography>
                 </div>
               </div>
               <br />
@@ -169,9 +159,7 @@ const Confirmation = (props) => {
                   <Typography>Tickets:</Typography>
                 </div>
                 <div>
-                  <Typography>
-                    {props.location.bookingSummary.tickets.toString()}
-                  </Typography>
+                  <Typography>{props.location.bookingSummary.tickets.toString()}</Typography>
                 </div>
               </div>
               <br />
@@ -181,9 +169,7 @@ const Confirmation = (props) => {
                   <Typography>Unit Price:</Typography>
                 </div>
                 <div>
-                  <Typography>
-                    {props.location.bookingSummary.unitPrice}
-                  </Typography>
+                  <Typography>{props.location.bookingSummary.unitPrice}</Typography>
                 </div>
               </div>
               <br />
@@ -198,11 +184,7 @@ const Confirmation = (props) => {
                   </FormControl>
                 </div>
                 <div className="marginApply">
-                  <Button
-                    variant="contained"
-                    onClick={couponApplyHandler}
-                    color="primary"
-                  >
+                  <Button variant="contained" onClick={couponApplyHandler} color="primary">
                     Apply
                   </Button>
                 </div>
@@ -218,11 +200,7 @@ const Confirmation = (props) => {
               </div>
               <br />
 
-              <Button
-                variant="contained"
-                onClick={confirmBookingHandler}
-                color="primary"
-              >
+              <Button variant="contained" onClick={confirmBookingHandler} color="primary">
                 Confirm Booking
               </Button>
             </CardContent>
@@ -232,8 +210,8 @@ const Confirmation = (props) => {
 
       <Snackbar
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center',
         }}
         className="snackbar"
         open={open}
