@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Header from '../common/header/Header';
+import Movies from './movies/Movies';
 import BookShow from './bookshow/BookShow';
 
 export default function Controller() {
@@ -8,7 +8,7 @@ export default function Controller() {
     <BrowserRouter>
       <React.Fragment>
         <Switch>
-          <Route exact path="/" component={BookShow} />
+          <Route exact path="/" component={Movies} />
         </Switch>
       </React.Fragment>
     </BrowserRouter>

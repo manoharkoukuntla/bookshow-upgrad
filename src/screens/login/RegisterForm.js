@@ -87,13 +87,12 @@ function RegisterForm(props) {
       const user = await register({ firstName, lastName, emailAddress, mobileNumber, password });
       setRegistrationSuccess(true);
     } catch (error) {
-      console.log(error);
       setRegistrationFail(true);
     }
   };
 
   const successMessage = <div className="mt-2">Registration Successful. Please Login.</div>;
-  const errorMessage = <div className="mt-2">Error Message</div>;
+  const errorMessage = <div className="mt-2 red">Registration Error</div>;
 
   return (
     <div>
