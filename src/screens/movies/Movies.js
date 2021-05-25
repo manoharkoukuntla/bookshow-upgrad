@@ -68,7 +68,7 @@ function Movies(props) {
   return (
     <div>
       <Header baseUrl={props.baseUrl} />
-      <div>Upcoming Movies</div>
+      <div className="upComingMovies">Upcoming Movies</div>
       {upcomingMoviesComponent}
       <div className="flex">
         <div className="moviesList">{moviesComponent}</div>
