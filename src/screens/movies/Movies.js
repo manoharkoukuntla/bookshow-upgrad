@@ -91,6 +91,18 @@ function Movies(props) {
     props.history.push(`/movie/${movie.id}`);
   };
 
+  const applyFilters = async () => {
+    const filter = {};
+    if (title) filter.title = title;
+    if (genre.length) filter.genre = genre.join(',');
+    if (artists.length) filter.artists = artists.join(',');
+    if (startDate) filter.startDate = startDate;
+    if (endDate) filter.endDate = endDate;
+
+    const moviesResponse = await getMovies(filter);
+    setMovies(moviesResponse.movies);
+  };
+
   const moviesComponent = (
     <GridList
       cols={4}
@@ -151,21 +163,15 @@ function Movies(props) {
                   multiple
                   value={genre}
                   onChange={(e) => setFilterGenre(e.target.value)}
-                  renderValue={(selected) =>
-                    genreData
-                      .filter((genreItem) => selected.includes(genreItem.id))
-                      .map((genreItem) => genreItem.genre)
-                      .join(', ')
-                  }
+                  renderValue={(selected) => selected.join(', ')}
                   inputProps={{
                     name: 'genre',
                     id: 'genre',
                   }}
                 >
-                  <MenuItem value="" />
                   {genreData.map((genreItem) => (
-                    <MenuItem key={genreItem.id} value={genreItem.id}>
-                      <Checkbox checked={genre.indexOf(genreItem.id) > -1} />
+                    <MenuItem key={genreItem.id} value={genreItem.genre}>
+                      <Checkbox checked={genre.indexOf(genreItem.genre) > -1} />
                       <ListItemText primary={genreItem.genre} />
                     </MenuItem>
                   ))}
@@ -178,21 +184,22 @@ function Movies(props) {
                   multiple
                   value={artists}
                   onChange={(e) => setFilterArtist(e.target.value)}
-                  renderValue={(selected) =>
-                    artistData
-                      .filter((artistItem) => selected.includes(artistItem.id))
-                      .map((artistItem) => `${artistItem.firstName} ${artistItem.lastName}`)
-                      .join(', ')
-                  }
+                  renderValue={(selected) => selected.join(', ')}
                   inputProps={{
                     name: 'artists',
                     id: 'artists',
                   }}
                 >
-                  <MenuItem value="" />
                   {artistData.map((artistItem) => (
-                    <MenuItem key={artistItem.id} value={artistItem.id}>
-                      <Checkbox checked={artists.indexOf(artistItem.id) > -1} />
+                    <MenuItem
+                      key={artistItem.id}
+                      value={`${artistItem.firstName} ${artistItem.lastName}`}
+                    >
+                      <Checkbox
+                        checked={
+                          artists.indexOf(`${artistItem.firstName} ${artistItem.lastName}`) > -1
+                        }
+                      />
                       <ListItemText primary={`${artistItem.firstName} ${artistItem.lastName}`} />
                     </MenuItem>
                   ))}
@@ -200,7 +207,43 @@ function Movies(props) {
               </FormControl>
 
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="Release Date">Release Date Start</InputLabel>
+                <TextField
+                  id="startDate"
+                  type="date"
+                  label="Release Date Start"
+                  value={startDate}
+                  onChange={(e) => setFilterStartDate(e.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  inputProps={{
+                    name: 'startDate',
+                    id: 'startDate',
+                  }}
+                />
+              </FormControl>
+
+              <FormControl className={classes.formControl}>
+                <TextField
+                  id="endDate"
+                  type="date"
+                  label="Release End Start"
+                  value={endDate}
+                  onChange={(e) => setFilterEndDate(e.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  inputProps={{
+                    name: 'endDate',
+                    id: 'endDate',
+                  }}
+                />
+              </FormControl>
+
+              <FormControl className={classes.formControl}>
+                <Button onClick={applyFilters} variant="contained" color="primary">
+                  Apply
+                </Button>
               </FormControl>
             </CardContent>
           </Card>
