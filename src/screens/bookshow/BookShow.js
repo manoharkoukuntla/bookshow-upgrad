@@ -13,6 +13,8 @@ import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { Link } from 'react-router-dom';
 
+import { getShowsByMovieId } from '../../common/scripts/api/movies';
+
 const BookShow = (props) => {
   const [location, setLocation] = useState('');
   const [theatre, setTheatre] = useState('');
@@ -34,33 +36,20 @@ const BookShow = (props) => {
   const [showId, setShowId] = useState('');
 
   useEffect(() => {
-    let dataShows = null;
-    fetch(props.baseUrl + 'movies/' + props.match.params.id + '/shows', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache',
-      },
-      body: dataShows,
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        setOriginalShows(response.shows);
+    (async () => {
+      const response = await getShowsByMovieId(props.match.params.id);
+      setOriginalShows(response.shows);
 
-        let newLocations = [];
+      let newLocations = response.shows.map((show) => ({
+        id: show.theatre.city,
+        location: show.theatre.city,
+      }));
 
-        for (let show of response.shows) {
-          newLocations.push({
-            id: show.theatre.city,
-            location: show.theatre.city,
-          });
-        }
-
-        newLocations = newLocations.filter(
-          (loc, index, self) => index === self.findIndex((c) => c.id === loc.id)
-        );
-        setLocations(newLocations);
-      });
+      newLocations = newLocations.filter(
+        (loc, index, self) => index === self.findIndex((c) => c.id === loc.id)
+      );
+      setLocations(newLocations);
+    })();
   }, []);
 
   const locationChangeHandler = (event) => {
@@ -108,7 +97,7 @@ const BookShow = (props) => {
         show.theatre.name === theatre &&
         show.language === event.target.value
       ) {
-        newShowDates.push({ id: show.show_timing, showDate: show.show_timing });
+        newShowDates.push({ id: show.showTiming, showDate: show.showTiming });
       }
     }
 
@@ -129,10 +118,10 @@ const BookShow = (props) => {
         show.theatre.city === location &&
         show.theatre.name === theatre &&
         show.language === language &&
-        show.show_timing === event.target.value
+        show.showTiming === event.target.value
       ) {
-        unitPrice = show.unit_price;
-        availableTickets = show.available_seats;
+        unitPrice = show.unitPrice;
+        availableTickets = show.availableSeats;
         setShowId(show.id);
       }
     }

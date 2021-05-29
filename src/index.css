@@ -24,6 +24,10 @@ body {
   margin-top: 10px;
 }
 
+.mt-3 {
+  margin-top: 16px;
+}
+
 .mx-a {
   margin-left: auto;
   margin-right: auto;

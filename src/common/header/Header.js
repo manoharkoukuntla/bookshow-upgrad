@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Cookies from 'js-cookie';
 import LoginModal from '../../screens/login/LoginModal';
 import { logout } from '../scripts/api/auth';
+import { withRouter } from 'react-router-dom';
 
 const styles = (theme) => ({
   mr1: {
@@ -33,14 +34,28 @@ function Header(props) {
     }
   };
 
+  const bookShowButtonHandler = () => {
+    if (accessToken) {
+      props.history.push(`/bookshow/${props.movieId}`);
+    } else {
+      openLoginModal(true);
+    }
+  };
+
   const LoginLogoutButton = () => (
     <Button variant="contained" onClick={loginLogoutButtonHandler}>
       {accessToken ? 'Logout' : 'Login'}
     </Button>
   );
+
   const BookShowButton = () =>
     showBookShow ? (
-      <Button className={classes.mr1} variant="contained" color="primary">
+      <Button
+        className={classes.mr1}
+        variant="contained"
+        color="primary"
+        onClick={bookShowButtonHandler}
+      >
         Book Show
       </Button>
     ) : (
@@ -59,4 +74,4 @@ function Header(props) {
   );
 }
 
-export default withStyles(styles)(Header);
+export default withRouter(withStyles(styles)(Header));
