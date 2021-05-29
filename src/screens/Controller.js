@@ -9,6 +9,7 @@ export default function Controller() {
       <React.Fragment>
         <Switch>
           <Route exact path="/" component={Movies} />
+          <Route exact path="/bookshow/:id" component={BookShow} />
         </Switch>
       </React.Fragment>
     </BrowserRouter>
