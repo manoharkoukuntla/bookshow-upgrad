@@ -55,13 +55,9 @@ const styles = (theme) => ({
   },
 });
 
-const pageLimit = 10;
-
 function Movies(props) {
   const { classes } = props;
   const [movies, setMovies] = useState([]);
-  const [releasedMoviesPages, setReleasedMoviesPages] = useState(1);
-  const [upComingMoviesPages, setUpComingMoviesPages] = useState(1);
   const [upComingMovies, setUpComingMovies] = useState([]);
   const [title, setFilterTitle] = useState('');
   const [genre, setFilterGenre] = useState([]);
@@ -79,8 +75,6 @@ function Movies(props) {
       const genresResponse = await getAllGenres();
 
       setMovies(moviesResponse.movies);
-      setReleasedMoviesPages(Math.ceil(moviesResponse.totalCount / pageLimit));
-      setUpComingMoviesPages(Math.ceil(upComingMoviesResponse.totalCount / pageLimit));
       setUpComingMovies(upComingMoviesResponse.movies);
       setArtistData(artistsResponse.artists);
       setGenreData(genresResponse.genres);

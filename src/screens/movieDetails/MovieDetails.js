@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { withStyles, Typography } from '@material-ui/core';
+import { withStyles, Typography, GridList, GridListTile, GridListTileBar } from '@material-ui/core';
 import { getMovieById } from '../../common/scripts/api/movies';
 import YouTube from 'react-youtube';
+import IconButton from '@material-ui/core/Icon';
 
 import Header from '../../common/header/Header';
 import moment from 'moment';
@@ -32,6 +33,21 @@ const styles = (theme) => ({
   artists: {
     width: '20%',
   },
+  ratingsIcon: {
+    cursor: 'pointer',
+  },
+  ratingsIconSelected: {
+    cursor: 'pointer',
+    color: 'yellow',
+  },
+  artistsHeading: {
+    marginTop: '16px',
+    marginBottom: '16px',
+    fontWeight: 'bold',
+  },
+  image: {
+    objectFit: 'scale-down',
+  },
 });
 
 function MovieDetails(props) {
@@ -48,6 +64,18 @@ function MovieDetails(props) {
       setVideoId(url.searchParams.get('v'));
     })();
   }, []);
+
+  const artistsComponent = (
+    <GridList cols={2}>
+      {movie &&
+        movie.artists.map((artist) => (
+          <GridListTile key={artist.id} style={{ height: '320px' }}>
+            <img src={artist.profileUrl} alt={artist.firstName} className={classes.image} />
+            <GridListTileBar title={`${artist.firstName} ${artist.lastName}`} />
+          </GridListTile>
+        ))}
+    </GridList>
+  );
 
   return (
     <div>
@@ -68,38 +96,38 @@ function MovieDetails(props) {
             <Typography variant="headline" component="h2" paragraph>
               {movie.title}
             </Typography>
-            <Typography variant="body" className={classes.property} inline paragraph>
+            <Typography variant="inherit" className={classes.property} inline paragraph>
               Genre:
             </Typography>
-            <Typography variant="body" inline paragraph className={classes.propertyValue}>
+            <Typography variant="inherit" inline paragraph className={classes.propertyValue}>
               {movie.genres.join(', ')}
             </Typography>
             <br />
-            <Typography variant="body" className={classes.property} inline paragraph>
+            <Typography variant="inherit" className={classes.property} inline paragraph>
               Duration:
             </Typography>
-            <Typography variant="body" inline paragraph className={classes.propertyValue}>
+            <Typography variant="inherit" inline paragraph className={classes.propertyValue}>
               {movie.duration} min
             </Typography>
             <br />
-            <Typography variant="body" className={classes.property} inline paragraph>
+            <Typography variant="inherit" className={classes.property} inline paragraph>
               Release Date:
             </Typography>
-            <Typography variant="body" inline paragraph className={classes.propertyValue}>
+            <Typography variant="inherit" inline paragraph className={classes.propertyValue}>
               {moment(movie.releaseDate).format('ddd MMMM DD YYYY')}
             </Typography>
             <br />
-            <Typography variant="body" className={classes.property} inline paragraph>
+            <Typography variant="inherit" className={classes.property} inline paragraph>
               Rating:
             </Typography>
-            <Typography variant="body" inline paragraph className={classes.propertyValue}>
+            <Typography variant="inherit" inline paragraph className={classes.propertyValue}>
               {movie.rating}
             </Typography>
             <div className="mt-3">
-              <Typography variant="body" className={classes.property} inline paragraph>
+              <Typography variant="inherit" className={classes.property} inline paragraph>
                 Plot:
               </Typography>
-              <Typography variant="body" inline paragraph className={classes.propertyValue}>
+              <Typography variant="inherit" inline paragraph className={classes.propertyValue}>
                 <a href={movie.wikiUrl} target="_blank">
                   (Wiki Link)
                 </a>{' '}
@@ -107,13 +135,30 @@ function MovieDetails(props) {
               </Typography>
             </div>
             <div className="mt-3">
-              <Typography variant="body" className={classes.property} paragraph>
+              <Typography variant="inherit" className={classes.property} paragraph>
                 Trailer:
               </Typography>
               <YouTube videoId={videoId}></YouTube>
             </div>
           </div>
-          <div className={classes.artists}></div>
+          <div className={classes.artists}>
+            <Typography variant="inherit" className={classes.property} paragraph>
+              Rate this Movie:
+            </Typography>
+
+            <IconButton className={classes.ratingsIcon}>star_border</IconButton>
+            <IconButton className={classes.ratingsIcon}>star_border</IconButton>
+            <IconButton className={classes.ratingsIcon}>star_border</IconButton>
+            <IconButton className={classes.ratingsIcon}>star_border</IconButton>
+            <IconButton className={classes.ratingsIcon}>star_border</IconButton>
+
+            <div>
+              <Typography variant="inherit" className={classes.artistsHeading} paragraph>
+                Artists:
+              </Typography>
+              {artistsComponent}
+            </div>
+          </div>
         </div>
       )}
     </div>
