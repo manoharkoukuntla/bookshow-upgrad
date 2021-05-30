@@ -84,7 +84,7 @@ function RegisterForm(props) {
     }
 
     try {
-      const user = await register({ firstName, lastName, emailAddress, mobileNumber, password });
+      await register({ firstName, lastName, emailAddress, mobileNumber, password });
       setRegistrationSuccess(true);
     } catch (error) {
       setRegistrationFail(true);

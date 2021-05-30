@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/Icon';
 
 import Header from '../../common/header/Header';
 import moment from 'moment';
+import { times } from 'lodash';
 
 const styles = (theme) => ({
   back: {
@@ -54,6 +55,7 @@ function MovieDetails(props) {
   const { classes } = props;
   const [movie, setMovie] = useState(null);
   const [videoId, setVideoId] = useState('');
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -75,6 +77,20 @@ function MovieDetails(props) {
           </GridListTile>
         ))}
     </GridList>
+  );
+
+  const ratingsComponent = (
+    <React.Fragment>
+      {times(5).map((currentRating) => (
+        <IconButton
+          key={currentRating}
+          className={rating > currentRating ? classes.ratingsIconSelected : classes.ratingsIcon}
+          onClick={() => setRating(currentRating + 1)}
+        >
+          star_border
+        </IconButton>
+      ))}
+    </React.Fragment>
   );
 
   return (
@@ -146,11 +162,7 @@ function MovieDetails(props) {
               Rate this Movie:
             </Typography>
 
-            <IconButton className={classes.ratingsIcon}>star_border</IconButton>
-            <IconButton className={classes.ratingsIcon}>star_border</IconButton>
-            <IconButton className={classes.ratingsIcon}>star_border</IconButton>
-            <IconButton className={classes.ratingsIcon}>star_border</IconButton>
-            <IconButton className={classes.ratingsIcon}>star_border</IconButton>
+            {ratingsComponent}
 
             <div>
               <Typography variant="inherit" className={classes.artistsHeading} paragraph>
