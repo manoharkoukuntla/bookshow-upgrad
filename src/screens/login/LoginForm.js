@@ -26,6 +26,7 @@ function LoginForm(props) {
   const [password, setPassword] = useState('');
   const [reqUsername, setReqUsername] = useState('dispNone');
   const [reqPassword, setReqPassword] = useState('dispNone');
+  const [loginError, setLoginError] = useState(false);
 
   const onSubmit = async () => {
     if (!username) {
@@ -48,11 +49,16 @@ function LoginForm(props) {
       const { accessToken } = await login({ username, password });
       Cookies.set('accessToken', accessToken);
       props.onClose();
-    } catch (error) {}
+    } catch (error) {
+      setLoginError(true);
+    }
   };
+
+  const errorMessage = loginError ?  <div className="red mt-2">Invalid Credentials</div> : ''
 
   return (
     <form className={classes.form}>
+      {errorMessage}
       <FormControl required className={classes.formControl}>
         <InputLabel htmlFor="username">Username</InputLabel>
         <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} />

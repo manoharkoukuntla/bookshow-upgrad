@@ -26,9 +26,14 @@ function Header(props) {
 
   const loginLogoutButtonHandler = async (event) => {
     if (accessToken) {
-      await logout({ accessToken });
-      Cookies.remove('accessToken');
-      setAccessToken('');
+      try {
+        await logout({ accessToken });
+        Cookies.remove('accessToken');
+        setAccessToken('');
+      } catch (e) {
+        Cookies.remove('accessToken');
+        setAccessToken('');
+      }
     } else {
       openLoginModal(true);
     }
